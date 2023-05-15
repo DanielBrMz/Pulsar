@@ -15,14 +15,32 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.customUber",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyArb6vDpdIgsWzpNNJfDbvbRSNDM5M7a8c"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.customUber",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyArb6vDpdIgsWzpNNJfDbvbRSNDM5M7a8c"
+        },
+        "permissions": [
+          "ACCESS_COARSE_LOCATION",
+          "ACCESS_FINE_LOCATION",
+          "FOREGROUND_SERVICE"
+        ]
       }
     },
+
     "web": {
       "favicon": "./assets/favicon.png"
     }
