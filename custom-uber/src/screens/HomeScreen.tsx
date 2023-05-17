@@ -44,6 +44,12 @@ const HomeScreen = (): JSX.Element => {
 
   const _map = useRef<MapView>(null);
 
+  useEffect(() => {
+    checkPermission();
+    getLocation();
+    console.log(latLng)
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
