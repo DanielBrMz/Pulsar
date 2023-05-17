@@ -1,18 +1,21 @@
-import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList } from "react-native";
-import React, {useState, useRef, useEffect} from "react";
+import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList, TouchableOpacity } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
 import * as Location from "expo-location";
-import MapView, {Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { colors, parameters } from "../global/styles";
-import {filterData, carsAround} from "../global/data";
+import { filterData, carsAround } from "../global/data";
 import { Icon } from "react-native-elements/dist/icons/Icon";
 import { StatusBar } from "expo-status-bar";
 import { mapStyle } from "../global/mapStyle";
+import RequestScreen from "./RequestScreen";
+import { NavigationProp, ParamListBase } from "@react-navigation/native";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-const HomeScreen = (): JSX.Element => {
-
-  const [latLng, setLatLng] = useState<{latitude: number, longitude: number}>({latitude: 0, longitude: 0});
+const HomeScreen = ({navigation}:{navigation: NavigationProp<ParamListBase>}): JSX.Element => {
+  const [latLng, setLatLng] = useState<{ latitude: number; longitude: number }>(
+    { latitude: 0, longitude: 0 }
+  );
 
   const checkPermission = async () => {
     const hashPermission = await Location.requestForegroundPermissionsAsync();
@@ -21,33 +24,35 @@ const HomeScreen = (): JSX.Element => {
       return persmission;
     }
     return true;
-  }
+  };
 
   const askPermission = async () => {
     const permission = await Location.requestForegroundPermissionsAsync();
-    return permission.status === "granted"
-  }
+    return permission.status === "granted";
+  };
 
   const getLocation = async () => {
-    try{
-      const {status}: {status: Location.PermissionStatus} = await Location.requestForegroundPermissionsAsync();
-      if(!status) return;
+    try {
+      const { status }: { status: Location.PermissionStatus } =
+        await Location.requestForegroundPermissionsAsync();
+      if (!status) return;
 
-      const {coords: {latitude, longitude}}: Location.LocationObject = await Location.getCurrentPositionAsync();
+      const {
+        coords: { latitude, longitude },
+      }: Location.LocationObject = await Location.getCurrentPositionAsync();
 
-      setLatLng({latitude, longitude});
-
-    }catch(error){
-      console.log(error)
+      setLatLng({ latitude, longitude });
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   const _map = useRef<MapView>(null);
 
   useEffect(() => {
     checkPermission();
     getLocation();
-    console.log(latLng)
+    console.log(latLng);
   }, []);
 
   return (
@@ -70,9 +75,11 @@ const HomeScreen = (): JSX.Element => {
               <Text style={styles.text2}>
                 Read a book, take a nap. Stare out the window
               </Text>
-              <View style={styles.button1}>
-                <Text style={styles.button1Text}>Ride with Uber</Text>
-              </View>
+              <TouchableOpacity onPress={()=>{navigation.navigate("RequestScreen")}}>
+                <View style={styles.button1}>
+                  <Text style={styles.button1Text}>Ride with Uber</Text>
+                </View>
+              </TouchableOpacity>
             </View>
             <View>
               <Image
@@ -175,25 +182,30 @@ const HomeScreen = (): JSX.Element => {
           </View>
         </View>
         <Text style={styles.text4}> Around you </Text>
-        <View style={{alignItems:"center", justifyContent:"center"}}>
-            <MapView
-                ref = {_map} 
-                provider={PROVIDER_GOOGLE}
-                style={styles.map} 
-                customMapStyle={mapStyle}
-                showsUserLocation={true}
-                followsUserLocation={true}
-                region = {{...carsAround[0], latitudeDelta: 0.015, longitudeDelta: 0.0121}}
-                >
-                  {carsAround.map((item, index) => (
-                    <Marker coordinate = {item} key={index.toString()}>
-                      <Image source={require("../../assets/carMarker.png")}
-                             style={styles.carsAround}
-                             resizeMode="cover" 
-                      />
-                    </Marker>
-                  ))}
-            </MapView>
+        <View style={{ alignItems: "center", justifyContent: "center" }}>
+          <MapView
+            ref={_map}
+            provider={PROVIDER_GOOGLE}
+            style={styles.map}
+            customMapStyle={mapStyle}
+            showsUserLocation={true}
+            followsUserLocation={true}
+            region={{
+              ...carsAround[0],
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.0121,
+            }}
+          >
+            {carsAround.map((item, index) => (
+              <Marker coordinate={item} key={index.toString()}>
+                <Image
+                  source={require("../../assets/carMarker.png")}
+                  style={styles.carsAround}
+                  resizeMode="cover"
+                />
+              </Marker>
+            ))}
+          </MapView>
         </View>
       </ScrollView>
       <StatusBar style="light" backgroundColor="#2058c0" translucent={true} />
