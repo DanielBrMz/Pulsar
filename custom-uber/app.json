@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "custom-uber",
-    "slug": "custom-uber",
+    "name": "molina-map",
+    "slug": "molina-map",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.customUber",
+      "bundleIdentifier": "com.molinaMap",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyArb6vDpdIgsWzpNNJfDbvbRSNDM5M7a8c"
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.customUber",
+      "package": "com.molinaMap",
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyArb6vDpdIgsWzpNNJfDbvbRSNDM5M7a8c"

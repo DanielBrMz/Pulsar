@@ -10,14 +10,14 @@ const DrawerNavigators = (): JSX.Element => {
   return (
     <Drawer.Navigator>
       <Drawer.Screen
-        name="HomeScreen"
+        name="HomeStack"
         component={HomeStack}
         options={{
           title: "Home",
           drawerIcon: ({ focused, size }) => (
             <Icon
               type="material-community"
-              name="Home"
+              name="home"
               size={size}
               color={focused ? "#7cc" : colors.grey}
             />
